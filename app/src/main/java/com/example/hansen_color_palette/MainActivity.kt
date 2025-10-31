@@ -13,42 +13,38 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    // Referencias de interfaz
     private lateinit var hueBar: SeekBar
     private lateinit var saturationBar: SeekBar
     private lateinit var brightnessBar: SeekBar
     private lateinit var colorPreview: ImageView
     private lateinit var saveButton: Button
+    private lateinit var clearColorsButton: Button
     private lateinit var savedColorsContainer: LinearLayout
     private lateinit var colorInfo: TextView
 
-    // Valores HSV
     private var hue = 0f
     private var saturation = 1f
     private var brightness = 1f
 
-    // Lista con máximo de 3 colores guardados
     private val savedColors = mutableListOf<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Inicialización de vistas
         hueBar = findViewById(R.id.hueBar)
         saturationBar = findViewById(R.id.saturationBar)
         brightnessBar = findViewById(R.id.brightnessBar)
         colorPreview = findViewById(R.id.colorPreview)
         saveButton = findViewById(R.id.saveButton)
+        clearColorsButton = findViewById(R.id.clearColorsButton)
         savedColorsContainer = findViewById(R.id.savedColorsContainer)
         colorInfo = findViewById(R.id.colorInfo)
 
-        // Configurar rangos
         hueBar.max = 360
         saturationBar.max = 100
         brightnessBar.max = 100
 
-        // Listener compartido para las tres barras
         val listener = object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 when (seekBar?.id) {
@@ -67,41 +63,35 @@ class MainActivity : AppCompatActivity() {
         saturationBar.setOnSeekBarChangeListener(listener)
         brightnessBar.setOnSeekBarChangeListener(listener)
 
-        // Botón guardar
         saveButton.setOnClickListener {
             val color = Color.HSVToColor(floatArrayOf(hue, saturation, brightness))
-            val hex = String.format("#%06X", 0xFFFFFF and color)
-            copyToClipboard(hex)
             saveColor(color)
+        }
+
+        clearColorsButton.setOnClickListener {
+            savedColors.clear()
+            savedColorsContainer.removeAllViews()
         }
 
         updateColor()
     }
 
-    // Actualiza el color principal, texto y degradados de las barras
     private fun updateColor() {
         val color = Color.HSVToColor(floatArrayOf(hue, saturation, brightness))
         colorPreview.setBackgroundColor(color)
-
         val hex = String.format("#%06X", 0xFFFFFF and color)
         colorInfo.text = "HEX: $hex | DEC: ${color and 0xFFFFFF}"
-
-        // Actualiza los gradientes de las barras
         updateHueGradient()
         updateSaturationGradient()
         updateBrightnessGradient()
     }
 
-    // Gradiente de tono
     private fun updateHueGradient() {
-        val hueColors = IntArray(361) { i ->
-            Color.HSVToColor(floatArrayOf(i.toFloat(), 1f, 1f))
-        }
+        val hueColors = IntArray(361) { i -> Color.HSVToColor(floatArrayOf(i.toFloat(), 1f, 1f)) }
         val gradient = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, hueColors)
         hueBar.progressDrawable = gradient
     }
 
-    // Gradiente de saturación (del gris al color actual)
     private fun updateSaturationGradient() {
         val startColor = Color.HSVToColor(floatArrayOf(hue, 0f, brightness))
         val endColor = Color.HSVToColor(floatArrayOf(hue, 1f, brightness))
@@ -109,7 +99,6 @@ class MainActivity : AppCompatActivity() {
         saturationBar.progressDrawable = gradient
     }
 
-    // Gradiente de brillo (negro al color actual)
     private fun updateBrightnessGradient() {
         val startColor = Color.HSVToColor(floatArrayOf(hue, saturation, 0f))
         val endColor = Color.HSVToColor(floatArrayOf(hue, saturation, 1f))
@@ -117,7 +106,6 @@ class MainActivity : AppCompatActivity() {
         brightnessBar.progressDrawable = gradient
     }
 
-    // Guarda el color (máximo 3)
     private fun saveColor(color: Int) {
         if (savedColors.size >= 3) {
             savedColors.removeAt(0)
@@ -153,7 +141,6 @@ class MainActivity : AppCompatActivity() {
         savedColorsContainer.addView(container)
     }
 
-    // Muestra color guardado y copia su HEX
     private fun showSavedColor(color: Int) {
         val hsv = FloatArray(3)
         Color.colorToHSV(color, hsv)
@@ -170,7 +157,6 @@ class MainActivity : AppCompatActivity() {
         copyToClipboard(hex)
     }
 
-    // Copia texto al portapapeles
     private fun copyToClipboard(text: String) {
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("Color HEX", text)
