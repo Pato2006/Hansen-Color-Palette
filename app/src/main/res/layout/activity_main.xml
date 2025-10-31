@@ -1,81 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <!-- Imagen de referencia de colores -->
-    <ImageView
-        android:id="@+id/colorImage"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/colores" />
-
-    <!-- Vista previa del color y botón GUARDAR -->
     <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/colorPreview"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="#FFFFFF"
-            android:layout_marginEnd="16dp" />
+        <!-- Cuadro principal + botón GUARDAR -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp">
 
-        <Button
-            android:id="@+id/saveButton"
+            <ImageView
+                android:id="@+id/colorPreview"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="#FFFFFF"
+                android:layout_marginEnd="16dp" />
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GUARDAR" />
+        </LinearLayout>
+
+        <!-- Info del color -->
+        <TextView
+            android:id="@+id/colorInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GUARDAR" />
+            android:text="HEX: #FFFFFF | DEC: 16777215"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Barras de color -->
+        <TextView
+            android:text="Color base"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <SeekBar
+            android:id="@+id/hueBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Saturación"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+        <SeekBar
+            android:id="@+id/saturationBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Brillo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+        <SeekBar
+            android:id="@+id/brightnessBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Colores guardados -->
+        <LinearLayout
+            android:id="@+id/savedColorsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp" />
+
     </LinearLayout>
-
-    <!-- Controles de color -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Color base"
-        android:layout_marginTop="8dp" />
-    <SeekBar
-        android:id="@+id/hueBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Saturación"
-        android:layout_marginTop="8dp" />
-    <SeekBar
-        android:id="@+id/saturationBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Brillo"
-        android:layout_marginTop="8dp" />
-    <SeekBar
-        android:id="@+id/brightnessBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <!-- Contenedor donde se guardan los colores -->
-    <LinearLayout
-        android:id="@+id/savedColorsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp" />
-
-</LinearLayout>
+</ScrollView>
