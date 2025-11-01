@@ -22,16 +22,16 @@
 
             <ImageView
                 android:id="@+id/colorPreview"
-                android:layout_width="159dp"
+                android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginEnd="16dp"
-                android:background="#FFFFFF" />
+                android:background="#FFFFFF"
+                android:layout_marginEnd="16dp" />
 
             <Button
                 android:id="@+id/saveButton"
-                android:layout_width="45dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/baseline_play_arrow_24" />
+                android:text="GUARDAR" />
         </LinearLayout>
 
         <TextView
@@ -93,19 +93,61 @@
             android:orientation="horizontal"
             android:layout_marginTop="16dp" />
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/paletteButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guardar paleta" />
+            <Button
+                android:id="@+id/clearPalette1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BORRAR PALLETA"
+                android:layout_marginTop="4dp" />
+
+            <Button
+                android:id="@+id/paletteButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guardar paleta"
+                android:layout_marginTop="8dp" />
+            <Button
+                android:id="@+id/clearPalette2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BORRAR PALLETA"
+                android:layout_marginTop="4dp" />
+
+            <Button
+                android:id="@+id/paletteButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guardar paleta"
+                android:layout_marginTop="8dp" />
+            <Button
+                android:id="@+id/clearPalette3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BORRAR PALLETA"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:text="© 2025 Pato's Co. All rights reserved.
 Any unauthorized copying, reproduction, or distribution is strictly prohibited.
-Violators will face immediate legal action to the fullest extent of the law." />
+Violators will face immediate legal action to the fullest extent of the law."
+            android:layout_marginTop="16dp"
+            android:gravity="center" />
 
     </LinearLayout>
 </ScrollView>
