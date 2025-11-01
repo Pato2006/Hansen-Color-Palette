@@ -185,8 +185,7 @@ class MainActivity : AppCompatActivity() {
             android.app.AlertDialog.Builder(this)
                 .setTitle("Guardar paleta")
                 .setView(layout)
-                .setPositiveButton("Guardar") { _, _ ->
-                    val name = editText.text.toString()
+                .setPositiveButton("Guardar") { _, _ -> val name = editText.text.toString()
                     if (name.isNotEmpty()) {
                         paletteColors[index].clear()
                         paletteColors[index].addAll(savedColors)
