@@ -67,6 +67,10 @@ class MainActivity : AppCompatActivity() {
         clearPalette2 = findViewById(R.id.clearPalette2)
         clearPalette3 = findViewById(R.id.clearPalette3)
 
+        // ----------- APLICAR TU DRAWABLE REDONDEADO AL IMAGEVIEW ----------- //
+        colorPreview.setBackgroundResource(R.drawable.redondeado)
+        // ------------------------------------------------------------------- //
+
         loadPalettes()
 
         hueBar.max = 360
@@ -113,9 +117,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateColor() {
         val color = Color.HSVToColor(floatArrayOf(hue, saturation, brightness))
-        colorPreview.setBackgroundColor(color)
+
+        // Obtener el drawable del fondo
+        val bg = colorPreview.background.mutate()
+
+        if (bg is GradientDrawable) {
+            bg.setColor(color)
+
+            // Borde negro de 2dp
+            val borderWidth = (1 * resources.displayMetrics.density).toInt()
+            bg.setStroke(borderWidth, Color.BLACK)
+        }
+
         val hex = String.format("#%06X", 0xFFFFFF and color)
         colorInfo.text = "HEX: $hex | DEC: ${color and 0xFFFFFF}"
+
         updateHueGradient()
         updateSaturationGradient()
         updateBrightnessGradient()
@@ -185,7 +201,8 @@ class MainActivity : AppCompatActivity() {
             android.app.AlertDialog.Builder(this)
                 .setTitle("Guardar paleta")
                 .setView(layout)
-                .setPositiveButton("Guardar") { _, _ -> val name = editText.text.toString()
+                .setPositiveButton("Guardar") { _, _ ->
+                    val name = editText.text.toString()
                     if (name.isNotEmpty()) {
                         paletteColors[index].clear()
                         paletteColors[index].addAll(savedColors)
